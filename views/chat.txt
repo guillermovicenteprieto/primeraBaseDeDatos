@@ -1,0 +1,17 @@
+[
+  {
+    "email": "ama@pola.com",
+    "text": "soy amapola",
+    "date": "jueves, 7 de abril de 2022 19:41"
+  },
+  {
+    "email": "guillermovicente@gmail.com",
+    "text": "hola hija",
+    "date": "jueves, 7 de abril de 2022 19:46"
+  },
+  {
+    "email": "julia@gmail.com",
+    "text": "hello world",
+    "date": "jueves, 7 de abril de 2022 19:58"
+  }
+]
