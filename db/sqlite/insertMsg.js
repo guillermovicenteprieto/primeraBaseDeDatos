@@ -1,11 +1,12 @@
 const {options} = require('../../options/sqliteDB.js');
 const knex = require('knex')(options);
+//const createTableMsg = require('./createTableMsg');
 
-async function insertMsg(msg) {
+async function insertMsg(message) {
+    
     try {
-        await knex('messages').insert(msg);
-        console.log('Message inserted');
-        
+        //const message = await createTableMsg();
+        await knex('messages').insert(message);
     } catch (err) {
         console.log(err);
     }

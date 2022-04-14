@@ -1,34 +1,33 @@
+const createTableProducts = require('../db/mariaDB/createTableProducts');
+const selectProducts = require('../db/mariaDB/selectProducts');
+const insertProducts = require('../db/mariaDB/insertProducts');
+
 class ProductClass {
-  constructor() {
-    this.product = [];
-    this.productId = 0;
-  }
-  get allProducts() {
+  // constructor() {
+  //   this.product = [];
+  //   this.productId = 0;
+  // }
+  async allProducts() {
     try {
-      return this.product;
+      const productsList = await selectProducts();
+      return productsList;
     } catch (error) {
-      throw new Error("Se produjo un error en allProducts: " + error.message);
+      throw new Error("Se produjo un error en allProducts: " + error.message)
     }
   }
 
-  getById(idProduct) {
-    try {
-      return this.product.find((product) => product.id == parseInt(idProduct));
-    } catch (error) {
-      throw new Error("Hubo un error en getById " + error.message);
-    }
-  }
 
-  saveProduct(product) {
+  async saveProduct(product) {
     try {
-      this.productId++;
+      //this.productId++;
       const addNewProduct = {
         title: product.title,
         price: product.price,
         url: product.url,
-        id: this.productId,
+        // id: this.productId,
       };
-      this.product.push(addNewProduct);
+      //this.product.push(addNewProduct);
+      await insertProducts(addNewProduct);
       return addNewProduct;
     } catch (error) {
       throw new Error(

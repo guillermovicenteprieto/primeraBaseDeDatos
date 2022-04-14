@@ -1,12 +1,15 @@
 const fs = require('fs').promises
 const moment = require('moment');
 moment.locale('es');
+const createTableMsg = require('../db/sqlite/createTableMsg');
+const selectMsg = require('../db/sqlite/selectMsg');
+const insertMsg = require('../db/sqlite/insertMsg');
 
 class MessageClass {
-    constructor(route) {
-        this.route = './views/chat.txt' 
-        this.message = [];
-    }
+    // constructor(route) {
+    //     this.route = './views/chat.txt' 
+    //     this.message = [];
+    // }
 
     async saveMessage(data) {
         try {
@@ -15,9 +18,11 @@ class MessageClass {
                 text: data.text,
                 date: moment().format('LLLL')
             }
-            const loadedMessage = await this.loadMessage()
-            loadedMessage.push(newMessage)
-            await fs.writeFile(this.route, JSON.stringify(loadedMessage, null, 2))
+            // const loadedMessage = await this.loadMessage()
+            // loadedMessage.push(newMessage)
+            // await fs.writeFile(this.route, JSON.stringify(loadedMessage, null, 2))
+            await insertMsg(newMessage)
+            return newMessage
         } catch (e) {
             throw new Error(e.message)
         }
@@ -25,16 +30,16 @@ class MessageClass {
     
     async loadMessage() {
         try {
-            const messageHistory = await fs.readFile(this.route)
-            if (messageHistory.toString() != '') {
-                this.message = JSON.parse(messageHistory)
-            }
-            return this.message
+            const messageHistory = await selectMsg()
+            // if (messageHistory.toString() != '') {
+            //     this.message = JSON.parse(messageHistory)
+            // }
+            return messageHistory
         } catch (e) {
-            if (e.code == "ENOENT") {
-                fs.writeFile(this.route, '')
-                return []
-            }
+            // if (e.code == "ENOENT") {
+            //     fs.writeFile(this.route, '')
+            //     return []
+            // }
             throw new Error(e.message)
         }
     }

@@ -1,3 +1,7 @@
+// const Products = require ('./class/productClass')
+// const storeProducts = new Products()
+// const productsList = storeProducts.allProducts()
+
 window.onload = () => {
   const socket = io();
 
@@ -29,5 +33,21 @@ window.onload = () => {
     }
     socket.emit('message-new', newMsg)
   }
-}
 
+  socket.on('products', data => {
+    loadProducts(data)
+  });
+
+  function loadProducts(data) {
+    const html = data.map((elem, index) => {
+      return (`<div class="product">
+                <span class="name">${elem.title}</span>
+                <span class="price">${elem.price}</span>
+              </div>
+              <hr>`)
+    }).join(" ");
+    document.getElementById('products').innerHTML = html;
+  }
+
+
+}

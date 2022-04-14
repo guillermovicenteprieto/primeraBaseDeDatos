@@ -4,14 +4,15 @@ const knex = require("knex")(options);
 async function createTableMsg () {
     try {
         await knex.schema.createTable('messages', table => {
-            table.increments('id').primary();
-            table.string('email');
-            table.timestamp("date");
-            table.string("msg", 300);
+            id = table.increments();
+            email = table.string('email');
+            text = table.string('text');
+            date = table.string('date');
         });
         console.log('Table created');
     } catch (err) {
-        console.log(err);
+        // console.log(err);
+        console.log('Table already exists');
     }
 }
 
