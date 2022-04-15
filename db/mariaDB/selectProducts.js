@@ -1,10 +1,10 @@
 const { options } = require('../../options/mariaDB.js');
 const knex = require('knex')(options);
-const createTableProducts = require('./createTableProducts');
+//const createTableProducts = require('./createTableProducts');
 
 async function selectProducts() {
     try {
-        const products = await createTableProducts();
+        //const products = await createTableProducts();
         const productsList = await knex('products').select('*');
         return productsList;
     } catch (err) {

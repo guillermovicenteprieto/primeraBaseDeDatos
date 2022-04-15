@@ -13,8 +13,10 @@ const io = new IOServer(httpServer);
 const Products = require ('./class/productClass')
 const storeProducts = new Products()
 
-const Messages = require('./class/messageClass')
+const Messages = require('./class/messageClass');
 const chat = new Messages()
+
+const insertProducts = require("./db/mariaDB/insertProducts");
 
 app.engine('hbs', handlebars.engine({
   extname: '.hbs',
@@ -47,7 +49,6 @@ io.on('connection', async (socket) => {
 
   socket.on('product-new', async (data) => {
     await storeProducts.saveProduct(data)
-    // const products2 = await storeProducts.loadProducts()
     io.sockets.emit('products', await storeProducts.allProducts());
   })
 

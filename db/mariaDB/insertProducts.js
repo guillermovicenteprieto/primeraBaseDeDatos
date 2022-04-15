@@ -3,7 +3,7 @@ const knex = require('knex')(options);
 
 async function insertProducts(product) {
     try {
-        await knex('products').insert(product);
+        await knex('products').insert(product)
         console.log('Product inserted');
     } catch (err) {
         console.log(err);

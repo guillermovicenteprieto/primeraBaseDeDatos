@@ -2,19 +2,20 @@ const { options } = require('../../options/mariaDB.js');
 const knex = require("knex")(options);
 
 
-async function createTableProducts() {
+(async () => {
     try {
-        await knex.schema.createTable("products", table => {
-            id = table.increments("id");
-            title = table.string("title");
-            price = table.integer("price");
-            url = table.string("url");
+        await knex.schema.createTableProducts("products", table => {
+            table.increments("id");
+            table.string("name");
+            table.integer("price");
+            table.string("url");
+            
         });
         console.log("Table products created");
     } catch (err) {
-        // console.log(err);
-        console.log('error en createTableProducts');
+        console.log('error en createTableProducts' + err);
     }
-}
-
-module.exports = createTableProducts;
+    finally {
+        knex.destroy();
+    }
+})()

@@ -1,6 +1,3 @@
-// const Products = require ('./class/productClass')
-// const storeProducts = new Products()
-// const productsList = storeProducts.allProducts()
 
 window.onload = () => {
   const socket = io();
@@ -34,20 +31,33 @@ window.onload = () => {
     socket.emit('message-new', newMsg)
   }
 
+
   socket.on('products', data => {
     loadProducts(data)
-  });
+  })
 
   function loadProducts(data) {
     const html = data.map((elem, index) => {
-      return (`<div class="product">
-                <span class="name">${elem.title}</span>
+      return (`<div >
+                <img src="${elem.url}" alt="">
+                <span class="name">${elem.name}</span>
                 <span class="price">${elem.price}</span>
-              </div>
-              <hr>`)
+              </div>`)
     }).join(" ");
     document.getElementById('products').innerHTML = html;
   }
 
-
+  document.getElementById('productForm').addEventListener('submit', (e) => {
+    e.preventDefault()
+    addProduct()
+  })
+  function addProduct() {
+    console.log("nuevoProducto")
+    const newProduct = {
+      name: document.getElementById('name').value,
+      price: document.getElementById('price').value,
+      url: document.getElementById('url').value
+    }
+    socket.emit('product-new', newProduct)
+  }
 }

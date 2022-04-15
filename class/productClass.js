@@ -1,12 +1,9 @@
-const createTableProducts = require('../db/mariaDB/createTableProducts');
+//const createTableProducts = require('../db/mariaDB/createTableProducts');
 const selectProducts = require('../db/mariaDB/selectProducts');
 const insertProducts = require('../db/mariaDB/insertProducts');
 
 class ProductClass {
-  // constructor() {
-  //   this.product = [];
-  //   this.productId = 0;
-  // }
+
   async allProducts() {
     try {
       const productsList = await selectProducts();
@@ -21,12 +18,11 @@ class ProductClass {
     try {
       //this.productId++;
       const addNewProduct = {
-        title: product.title,
+        name: product.name,
         price: product.price,
         url: product.url,
         // id: this.productId,
       };
-      //this.product.push(addNewProduct);
       await insertProducts(addNewProduct);
       return addNewProduct;
     } catch (error) {
