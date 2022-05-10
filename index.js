@@ -3,6 +3,8 @@ const handlebars = require('express-handlebars')
 const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
 
+const generateRandomProduct = require("./class/fakerContainer.js");
+
 const PORT = 8080
 
 const routerHandlebars = express.Router()
@@ -34,6 +36,8 @@ app.use(express.urlencoded({extended: true}))
 app.use(routerHandlebars)
 
 
+const listProd = generateRandomProduct(5)
+
 io.on('connection', async (socket) => {
   const message = await chat.loadMessage()
   socket.emit('messages', message )
@@ -55,13 +59,26 @@ io.on('connection', async (socket) => {
 })
 
 routerHandlebars
+
+.get('/api/productos-test', (req, res) => {
+  //res.json(listProd)
+  //res.render('faker', {listProd})
+})
+
+
 .get('/', (req, res) => {
   const productsList = storeProducts.allProducts()
   res.render('home', {productsList})
 })
 
 .post('/', (req, res) => {
+  /*
   const newProduct = storeProducts.saveProduct(req.body)
+  res.redirect('/')
+  */
+  const { name, price, url } = req.body
+  const product = { name, price, url }
+  insertProducts(product)
   res.redirect('/')
 })
 

@@ -2,6 +2,12 @@
 const selectProducts = require('../db/mariaDB/selectProducts');
 const insertProducts = require('../db/mariaDB/insertProducts');
 
+const generateRandomProduct = require("./fakerContainer.js");
+const listProd = generateRandomProduct(10);
+//console.log({listProd});
+
+const generateProduct = require("../src/utils/product.util.js");
+
 class ProductClass {
 
   async allProducts() {
@@ -16,12 +22,10 @@ class ProductClass {
 
   async saveProduct(product) {
     try {
-      //this.productId++;
       const addNewProduct = {
         name: product.name,
         price: product.price,
         url: product.url,
-        // id: this.productId,
       };
       await insertProducts(addNewProduct);
       return addNewProduct;

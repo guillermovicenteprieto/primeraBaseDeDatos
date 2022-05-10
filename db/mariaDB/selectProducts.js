@@ -1,6 +1,5 @@
 const { options } = require('../../options/mariaDB.js');
 const knex = require('knex')(options);
-//const createTableProducts = require('./createTableProducts');
 
 async function selectProducts() {
     try {
@@ -13,6 +12,3 @@ async function selectProducts() {
 }
 
 module.exports = selectProducts;
-
-
-
