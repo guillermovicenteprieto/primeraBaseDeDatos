@@ -12,7 +12,7 @@ const app = express();
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
 
-const Products = require ('./class/productClass')
+const Products = require('./class/productClass')
 const storeProducts = new Products()
 
 const Messages = require('./class/messageClass');
@@ -30,22 +30,22 @@ app.engine('hbs', handlebars.engine({
 app.set('view engine', 'hbs')
 app.set('views', './views')
 
+const listProducts = generateRandomProduct(5)
 
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(routerHandlebars)
 
 
-const listProd = generateRandomProduct(5)
 
 io.on('connection', async (socket) => {
   const message = await chat.loadMessage()
-  socket.emit('messages', message )
-  
-  socket.on('message-new',async data => {
+  socket.emit('messages', message)
+
+  socket.on('message-new', async data => {
     await chat.saveMessage(data)
     const message2 = await chat.loadMessage()
-    io.sockets.emit('messages', message2 );
+    io.sockets.emit('messages', message2);
   });
 
   const products = await storeProducts.allProducts()
@@ -60,27 +60,21 @@ io.on('connection', async (socket) => {
 
 routerHandlebars
 
-.get('/api/productos-test', (req, res) => {
-  //res.json(listProd)
-  //res.render('faker', {listProd})
-})
+  .get('/api/productos-test', (req, res) => {
+    res.render('faker', { listProducts })
+  })
 
+  .get('/', (req, res) => {
+    const productsList = storeProducts.allProducts()
+    res.render('home', { productsList })
+  })
 
-.get('/', (req, res) => {
-  const productsList = storeProducts.allProducts()
-  res.render('home', {productsList})
-})
-
-.post('/', (req, res) => {
-  /*
-  const newProduct = storeProducts.saveProduct(req.body)
-  res.redirect('/')
-  */
-  const { name, price, url } = req.body
-  const product = { name, price, url }
-  insertProducts(product)
-  res.redirect('/')
-})
+  .post('/', (req, res) => {
+    const { name, price, url } = req.body
+    const product = { name, price, url }
+    insertProducts(product)
+    res.redirect('/')
+  })
 
 app.use(express.static(__dirname + "/public"));
 

@@ -1,22 +1,20 @@
 const { faker } = require("@faker-js/faker");
 
-function generateRandomProduct(cant=10) {
+function generateRandomProduct(cant = 5) {
     let listProducts = [];
-    for (let i = 0; i < cant; i++) {
+    for (let i = 0; i < Number(cant); i++) {
         const prod = {
-            id: i,
+            id: i+1,
             name: faker.commerce.productName(),
             price: faker.commerce.price(),
             url: faker.internet.url()
         }
-        listProducts.push(prod);
-        return listProducts
+        listProducts.push(prod); 
     }
+    return listProducts
 }
 
 module.exports = generateRandomProduct;
-
-
 
 /*
 generateRandomMessage(cant) {   

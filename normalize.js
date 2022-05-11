@@ -1,4 +1,4 @@
-import { normalize, schema, denormalize } from 'normalizr';
+const { normalize, schema, denormalize } = require('normalizr');
 
 const originalData = {
     id: "999",
@@ -131,7 +131,7 @@ const normalizedData = normalize(originalData, articles);
 
 //console.log(normalizedData);
 
-import util from 'util';
+const util = require('util');
 
 function printData(data) {
     console.log(util.inspect(data, false, 12, true));
@@ -139,14 +139,22 @@ function printData(data) {
 
 printData(normalizedData);
 
-console.log({"originalData": [(JSON.stringify(originalData).length)]});
-console.log({"normalizedData": [(JSON.stringify(normalizedData).length)]});
-
-console.log({"diferencia entre originalData y normalizedData ": [(JSON.stringify(originalData).length - JSON.stringify(normalizedData).length)]});
-
 //denormalize
 const dataOriginal = denormalize(normalizedData.result, articles, normalizedData.entities);
 
 //console.log(dataOriginal);
 
-//printData(dataOriginal);
+printData(dataOriginal);
+
+console.log({"originalData": (JSON.stringify(originalData).length)});
+console.log({"normalizedData": (JSON.stringify(normalizedData).length)});
+console.log({"Diferencia entre originalData y normalizedData ": (JSON.stringify(originalData).length - JSON.stringify(normalizedData).length)});
+
+function compression( a, b) {
+  const percent = Math.round(100 - (a * 100) / b);
+  console.log({"Compresión del proceso de normalización, en porcentaje: ":  percent + "%"});
+}
+compression(
+  parseInt(JSON.stringify(normalizedData).length),
+  parseInt(JSON.stringify(originalData).length)
+);

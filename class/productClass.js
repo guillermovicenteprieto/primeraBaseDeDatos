@@ -2,11 +2,7 @@
 const selectProducts = require('../db/mariaDB/selectProducts');
 const insertProducts = require('../db/mariaDB/insertProducts');
 
-const generateRandomProduct = require("./fakerContainer.js");
-const listProd = generateRandomProduct(10);
-//console.log({listProd});
-
-const generateProduct = require("../src/utils/product.util.js");
+//const generateProduct = require("../src/utils/product.util.js");
 
 class ProductClass {
 

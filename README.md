@@ -1,2 +1,7 @@
-# primeraBaseDeDatos
+# primeraBaseDeDatos + mocks
+
+## MOCKS Y NORMALIZACIÓN
+
+
+
 

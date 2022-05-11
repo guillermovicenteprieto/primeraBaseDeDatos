@@ -3,7 +3,6 @@ const knex = require('knex')(options);
 
 async function selectProducts() {
     try {
-        //const products = await createTableProducts();
         const productsList = await knex('products').select('*');
         return productsList;
     } catch (err) {

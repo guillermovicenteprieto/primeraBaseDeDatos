@@ -2,11 +2,6 @@ const { options } = require('../../options/mariaDB.js');
 const knex = require("knex")(options);
 // const insertProducts = require("../../db/mariaDB/insertProducts");
 
-const generateRandomProduct = require("../../class/fakerContainer.js");
-const listProd = generateRandomProduct(10);
-console.log({listProd});
-
-
 (async () => {
     try {
         await knex.schema.createTable("products", table => {
